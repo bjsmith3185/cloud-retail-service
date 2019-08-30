@@ -162,6 +162,74 @@ public class RetailService {
     // Helper Methods
 
 
+
+    public List<InStockProducts> checkIfInStock(List<InputItem> itemList) {
+        // loop the list of products to see if they are in stock
+        // if they are available put them in a temp list
+
+        System.out.println();
+        System.out.println();
+        System.out.println("!!!!!!!!!!!!!!  THIS IS THE ITEM LIST TO CHECK INVENTORY ON");
+        System.out.println(itemList.toString());
+
+
+        List<InStockProducts> inStockProducts = new ArrayList<>();
+
+        // Create a List<Inventory> to popoulate with the updated qty of instock products
+        List<Inventory> updatedInventoryList = new ArrayList<>();
+
+
+        for (InputItem each : itemList) {
+
+            // get Inventory object for each productId
+            Inventory tempInventory = inventoryServiceClient.getInventoryByProductId(each.getProductId());
+
+            System.out.println("This is the returned inventory object for product");
+            System.out.println(tempInventory.toString());
+            System.out.println(tempInventory.getId());
+
+            //  *** the inventoryId is coming back as 0.
+
+            if (each.getQuantity() <= tempInventory.getQuantity()) {
+
+                InStockProducts tempInStock = new InStockProducts();
+                tempInStock.setProductId(each.getProductId());
+                tempInStock.setQuantity(each.getQuantity());
+                tempInStock.setInventory(tempInventory);
+
+                inStockProducts.add(tempInStock);
+
+                // Also, create a temp Inventory object to update the qty
+                Inventory updatedInventory = new Inventory();
+                updatedInventory.setId(tempInventory.getId());
+                updatedInventory.setProductId(each.getProductId());
+                updatedInventory.setQuantity(tempInventory.getQuantity() - each.getQuantity());
+                // add this temp Inventory to the updatedInventoryList
+                updatedInventoryList.add(updatedInventory);
+            }
+
+        }
+
+        // Send a List back to Inventory service to update the stock qty's
+        if (updatedInventoryList.size() > 0) {
+            updateInventory(updatedInventoryList);
+        }
+
+        return inStockProducts;
+    }
+
+    public Customer checkCustomer(Customer customer) {
+
+        if (customer.getId() <= 0) {
+            // create a new Customer
+            System.out.println("CREATING A NEW CUSTOMER OBJECT FROM CUSTOMER-SERVICE");
+            customer = customerServiceClient.createCustomer(customer);
+        }
+
+        return customer;
+    }
+
+
     public OrderResponseView createResponseView(SingleInvoice singleInvoice, Customer customer, LevelUpInfo levelUpInfo) {
         // Create an OrderResponseView to return
         OrderResponseView returnView = new OrderResponseView();
@@ -370,60 +438,7 @@ public class RetailService {
     }
 
 
-    public List<InStockProducts> checkIfInStock(List<InputItem> itemList) {
-        // loop the list of products to see if they are in stock
-        // if they are available put them in a temp list
 
-        System.out.println();
-        System.out.println();
-        System.out.println("!!!!!!!!!!!!!!  THIS IS THE ITEM LIST TO CHECK INVENTORY ON");
-        System.out.println(itemList.toString());
-
-
-        List<InStockProducts> inStockProducts = new ArrayList<>();
-
-        // Create a List<Inventory> to popoulate with the updated qty of instock products
-        List<Inventory> updatedInventoryList = new ArrayList<>();
-
-
-        for (InputItem each : itemList) {
-
-            // get Inventory object for each productId
-            Inventory tempInventory = inventoryServiceClient.getInventoryByProductId(each.getProductId());
-
-            System.out.println("This is the returned inventory object for product");
-            System.out.println(tempInventory.toString());
-            System.out.println(tempInventory.getId());
-
-            //  *** the inventoryId is coming back as 0.
-
-            if (each.getQuantity() <= tempInventory.getQuantity()) {
-
-                InStockProducts tempInStock = new InStockProducts();
-                tempInStock.setProductId(each.getProductId());
-                tempInStock.setQuantity(each.getQuantity());
-                tempInStock.setInventory(tempInventory);
-
-                inStockProducts.add(tempInStock);
-
-                // Also, create a temp Inventory object to update the qty
-                Inventory updatedInventory = new Inventory();
-                updatedInventory.setId(tempInventory.getId());
-                updatedInventory.setProductId(each.getProductId());
-                updatedInventory.setQuantity(tempInventory.getQuantity() - each.getQuantity());
-                // add this temp Inventory to the updatedInventoryList
-                updatedInventoryList.add(updatedInventory);
-            }
-
-        }
-
-        // Send a List back to Inventory service to update the stock qty's
-        if (updatedInventoryList.size() > 0) {
-            updateInventory(updatedInventoryList);
-        }
-
-        return inStockProducts;
-    }
 
 
     public void updateInventory(List<Inventory> list) {
@@ -433,16 +448,7 @@ public class RetailService {
     }
 
 
-    public Customer checkCustomer(Customer customer) {
 
-        if (customer.getId() <= 0) {
-            // create a new Customer
-            System.out.println("CREATING A NEW CUSTOMER OBJECT FROM CUSTOMER-SERVICE");
-            customer = customerServiceClient.createCustomer(customer);
-        }
-
-        return customer;
-    }
 
 
 }

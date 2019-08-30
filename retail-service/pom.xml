@@ -68,7 +68,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>0.25.2.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 	<dependencyManagement>
 		<dependencies>

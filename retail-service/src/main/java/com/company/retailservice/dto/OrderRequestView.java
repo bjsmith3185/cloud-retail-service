@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class OrderRequestView {
 
-
+    @NotNull(message = "must contain a customer object")
     private Customer customer;
-    @NotNull
+    @NotNull( message = "must contain a list of InputItem objects")
     private List<InputItem> products;
 
 

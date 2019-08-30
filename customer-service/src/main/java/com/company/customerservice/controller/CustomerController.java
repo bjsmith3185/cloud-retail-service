@@ -20,8 +20,7 @@ public class CustomerController {
 
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
-        Customer customer1 = service.saveCustomer(customer);
-        return customer1;
+        return service.saveCustomer(customer);
     }
 
     @GetMapping(value = "/id/{id}")

@@ -1,15 +1,23 @@
 package com.company.retailservice.dto;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Customer {
     private int id;
+    @NotEmpty(message= "must contain a first name")
     private String firstName;
+    @NotEmpty(message= "must contain a last name")
     private String lastName;
+    @NotEmpty(message= "must contain a street")
     private String street;
+    @NotEmpty(message= "must contain a city")
     private String city;
+    @NotEmpty(message= "must contain a zip code")
     private String zip;
+    @NotEmpty(message= "must contain an email")
     private String email;
+    @NotEmpty(message= "must contain a phone number")
     private String phone;
 
     public int getId() {

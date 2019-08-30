@@ -104,4 +104,20 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, street, city, zip, email, phone);
     }
+
+    // to string
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", zip='" + zip + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }

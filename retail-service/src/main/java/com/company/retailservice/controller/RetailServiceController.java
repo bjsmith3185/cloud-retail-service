@@ -3,12 +3,15 @@ package com.company.retailservice.controller;
 import com.company.retailservice.dto.*;
 import com.company.retailservice.service.RetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RefreshScope
 public class RetailServiceController {
 
     @Autowired
@@ -36,7 +39,7 @@ public class RetailServiceController {
 
     @RequestMapping(value = "/retail/order", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponseView createOrder(@RequestBody OrderRequestView orderRequestView) {
+    public OrderResponseView createOrder(@RequestBody @Valid OrderRequestView orderRequestView) {
 
         return service.createOrder(orderRequestView);
 
