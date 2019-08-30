@@ -48,4 +48,15 @@ public class Inventory {
     public int hashCode() {
         return Objects.hash(id, productId, quantity);
     }
+
+    // to string
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

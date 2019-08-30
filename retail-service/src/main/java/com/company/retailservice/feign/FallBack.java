@@ -2,7 +2,6 @@ package com.company.retailservice.feign;
 
 import com.company.retailservice.dto.LevelUp;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,25 +52,7 @@ public class FallBack implements LevelUpServiceClient {
         levelUpList.add(levelUp);
 
         return levelUpList;
-
-
     }
-
-    //    public List<LevelUp> getLevelUpPointsWithOutService(int id) {
-//
-//        System.out.println("$$$$$$$$$$$  is this being called ???????????");
-//
-//        LevelUp levelUp = new LevelUp();
-//        levelUp.setCustomerId(id);
-//        levelUp.setPoints(0);
-//        levelUp.setMemberDate(LocalDate.now());
-//
-//        List<LevelUp> levelUpList = new ArrayList<>();
-//        levelUpList.add(levelUp);
-//
-//        return levelUpList;
-//
-//    }
 
 
 

@@ -1,8 +1,6 @@
 package com.company.productservice.dao;
 
 import com.company.productservice.model.Product;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductDao {

@@ -1,0 +1,189 @@
+
+Json object to use in postman
+
+** Admin-Service **
+
+Customer - create
+
+    {
+        "firstName" : "brian",
+        "lastName" : "smith",
+        "street" : "long",
+        "city" : "charlotte",
+        "zip" : "28202",
+        "email" : "bmail",
+        "phone" : "704-hot-mail"
+    }
+
+Product - create
+
+    {
+        "productName" : "Java Book",
+        "productDescription" : "very long book",
+        "listPrice" : 34,
+        "unitCost" : 12
+    }
+
+    {
+        "productName" : "CSS Book",
+        "productDescription" : "very colorful book",
+        "listPrice" : 56,
+        "unitCost" : 8
+    }
+
+Inventory - create
+
+    {
+        "productId" : "1",
+        "quantity" : "13"
+    }
+
+    {
+        "productId" : "2",
+        "quantity" : "23"
+    }
+
+LevelUp - create
+
+    {
+        "customerId" : "1",
+        "points" : "0",
+        "memberDate" : "2000-12-12"
+    }
+
+InvoiceViewModel - create 
+
+    {
+        "customerId": "1",
+        "purchaseDate": "2000-12-12",
+        "invoiceItems": [
+            {
+                "inventoryId": "1",
+                "quantity": "2",
+                "unitPrice": "23"
+            }
+        ]
+    }
+
+
+
+
+
+** Retail-Service **
+
+OrderRequestView  -  with one product 
+
+    {
+        "customer": {
+            "id": 1,
+            "firstName": "brian",
+            "lastName": "smith",
+            "street": "long",
+            "city": "charlotte",
+            "zip": "28202",
+            "email": "bmail",
+            "phone": "704-hot-mail"
+        },
+        "products": [
+            {
+                "productId": "1",
+                "quantity": "1"
+            }
+        ]
+    }
+
+OrderRequestView  - with two products (make sure 2 products, inventory objects are populated first thru admin-service)
+
+    {
+        "customer": {
+            "id": 1,
+            "firstName": "brian",
+            "lastName": "smith",
+            "street": "long",
+            "city": "charlotte",
+            "zip": "28202",
+            "email": "bmail",
+            "phone": "704-hot-mail"
+        },
+        "products": [
+            {
+                "productId": "1",
+                "quantity": "1"
+            },
+            {
+                "productId": "2",
+                "quantity": "1"
+            }
+        ]
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

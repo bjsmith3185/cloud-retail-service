@@ -28,14 +28,4 @@ public interface ProductServiceClient {
     public void deleteProduct(@PathVariable int id);
 
 
-
-
-
-//    @RequestMapping(value = "/products", method = RequestMethod.GET)
-//    public List<Product> getAllProducts();
-//
-//    @RequestMapping(value = "/products/id/{id}", method = RequestMethod.GET)
-//    public Product getProductById(@PathVariable int id);
-
-
 }

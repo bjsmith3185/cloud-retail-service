@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Retail Store Service
+  description: An API to allow clients to use all CRUD operations on many different microservices.
+  
+servers: 
+  - url: http://localhost:8080
+    description: Local dev server
+paths: 
+  /retail/order/:
+    post:
+      summary: Creates a order from OrderRequestView and returns created order from OrderResponseView
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderResponseView'
+      responses:
+        '200':
+          description: Succesfully created order
+
+  /retail/products/{id}:
+    # GET, DELETE, and PUT are all under this path entry
+    get:
+      summary: Retrieves the entry for the product with the given ID.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: ID of the product you would like to retrieve.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Product object matching given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+              
+
+  /products/:
+    # GET, DELETE, and PUT are all under this path entry
+    get:
+      summary: Retrieves all the entry for the products.
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: ID of the post you would like to retrieve.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Post object matching given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+components:
+  schemas:
+    OrderResponseView:
+      properties:
+        customer:
+          type: object
+        levelUpInfo:
+          type: object
+        order:
+          type: object
+      required: 
+        - customer
+        - levelUpInfo
+        - commenterName
+        - comment
+    Product:
+      properties:
+        id:
+          type: integer
+        productName:
+          type: string
+        productDescription:
+          type: string
+        listPrice:
+          type: number
+        unitCost:
+          type: number
+      required: 
+        - productName
+        - productDescription
+        - listPrice
+        - unitCost
+
+    

@@ -1,7 +1,6 @@
 package com.company.invoiceservice.dao;
 
 import com.company.invoiceservice.model.Invoice;
-import com.company.invoiceservice.model.InvoiceItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +13,7 @@ import java.util.List;
 
 @Repository
 public class InvoiceDaoJdbcTemplateImpl implements InvoiceDao {
+
     private JdbcTemplate jdbcTemplate;
 
     private static final String INSERT_INVOICE_SQL =

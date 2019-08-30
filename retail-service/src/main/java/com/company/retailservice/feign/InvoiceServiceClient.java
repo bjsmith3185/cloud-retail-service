@@ -1,7 +1,5 @@
 package com.company.retailservice.feign;
 
-import com.company.retailservice.dto.Invoice;
-import com.company.retailservice.dto.InvoiceItem;
 import com.company.retailservice.dto.InvoiceViewModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
@@ -41,16 +39,6 @@ public interface InvoiceServiceClient {
     @ResponseStatus(HttpStatus.OK)
     public int getQuantity(@PathVariable("{invoiceid}") int invoiceId);
 
-
-//    @RequestMapping(value = "/invoices", method = RequestMethod.POST)
-//    public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel);
-//
-//
-////    @RequestMapping(value = "/invoices/id/{id}", method = RequestMethod.GET)
-////    public InvoiceViewModel getInvoiceById(@PathVariable int id);
-//
-////    @RequestMapping(value = "/InvoiceItems", method = RequestMethod.GET)
-////    public List<InvoiceItem> getAllInvoiceItemss();
 
 
 }

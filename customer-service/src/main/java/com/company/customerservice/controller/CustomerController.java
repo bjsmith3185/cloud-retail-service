@@ -1,6 +1,5 @@
 package com.company.customerservice.controller;
 
-import com.company.customerservice.dao.CustomerDao;
 import com.company.customerservice.exception.NotFoundException;
 import com.company.customerservice.model.Customer;
 import com.company.customerservice.service.CustomerService;

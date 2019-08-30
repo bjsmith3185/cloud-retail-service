@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
+
     private int id;
     @NotNull
     private String productName;
@@ -14,6 +15,8 @@ public class Product {
     private BigDecimal listPrice;
     @NotNull
     private BigDecimal unitCost;
+
+    // getters / setters
 
     public int getId() {
         return id;
@@ -55,6 +58,8 @@ public class Product {
         this.unitCost = unitCost;
     }
 
+    // equals / hash
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,5 +75,18 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, productName, productDescription, listPrice, unitCost);
+    }
+
+    // to string
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productName='" + productName + '\'' +
+                ", productDescription='" + productDescription + '\'' +
+                ", listPrice=" + listPrice +
+                ", unitCost=" + unitCost +
+                '}';
     }
 }

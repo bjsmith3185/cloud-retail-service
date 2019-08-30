@@ -1,13 +1,11 @@
 package com.company.invoiceservice.controller;
 
-import com.company.invoiceservice.dao.InvoiceDao;
-import com.company.invoiceservice.dao.InvoiceItemDao;
 import com.company.invoiceservice.exception.NotFoundException;
-import com.company.invoiceservice.model.Invoice;
 import com.company.invoiceservice.model.InvoiceItem;
 import com.company.invoiceservice.service.InvoiceService;
 import com.company.invoiceservice.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
+@RefreshScope
 @RequestMapping("/invoices")
 public class InvoiceController {
     @Autowired
@@ -26,8 +25,6 @@ public class InvoiceController {
         System.out.println("!!!!!!!");
         System.out.println(invoiceViewModel.getInvoice().toString());
         System.out.println(invoiceViewModel.getInvoiceItems().toString());
-
-
 
         return service.saveInvoice(invoiceViewModel);
     }

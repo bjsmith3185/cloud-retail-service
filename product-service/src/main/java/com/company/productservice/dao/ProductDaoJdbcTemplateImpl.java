@@ -13,7 +13,9 @@ import java.util.List;
 
 @Repository
 public class ProductDaoJdbcTemplateImpl implements ProductDao {
+
     private JdbcTemplate jdbcTemplate;
+
 
     private static final String INSERT_PRODUCT_SQL =
             "insert into product (product_name, product_description, list_price, unit_cost) values (?, ?, ?, ?)";
@@ -29,6 +31,7 @@ public class ProductDaoJdbcTemplateImpl implements ProductDao {
 
     private static final String DELETE_PRODUCT =
             "delete from product where product_id = ?";
+
 
     @Autowired
     public ProductDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {

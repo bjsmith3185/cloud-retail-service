@@ -14,6 +14,7 @@ import java.util.List;
 
 @Repository
 public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao {
+
     private JdbcTemplate jdbcTemplate;
 
     private static final String INSERT_INVOICE_ITEM_SQL =

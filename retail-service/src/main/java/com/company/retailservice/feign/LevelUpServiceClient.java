@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@FeignClient(name = "level-up-service")
+
 @FeignClient(name = "level-up-service", fallback = FallBack.class)
 public interface LevelUpServiceClient {
 
@@ -33,14 +33,5 @@ public interface LevelUpServiceClient {
     @RequestMapping(value = "/levelup/customerid/{customerid}", method = RequestMethod.GET)
     public List<LevelUp> getLevelUpByCustomer(@PathVariable("customerid") int customerId);
 
-
-// =======
-//     public LevelUp getLevelUpByCustomerId(@PathVariable int customerid);
-
-
-
-// //    @RequestMapping(value = "/levelup/customerid/{customerid}", method = RequestMethod.GET)
-// //    public LevelUp getLevelUpByCustomer(@PathVariable int customerId);
-// >>>>>>> master
 
 }

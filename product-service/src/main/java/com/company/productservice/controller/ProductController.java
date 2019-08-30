@@ -1,6 +1,5 @@
 package com.company.productservice.controller;
 
-import com.company.productservice.dao.ProductDao;
 import com.company.productservice.exception.NotFoundException;
 import com.company.productservice.model.Product;
 import com.company.productservice.service.ProductService;

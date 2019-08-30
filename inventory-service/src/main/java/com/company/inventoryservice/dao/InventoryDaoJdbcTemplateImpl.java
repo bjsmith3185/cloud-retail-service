@@ -2,7 +2,6 @@ package com.company.inventoryservice.dao;
 
 import com.company.inventoryservice.model.Inventory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

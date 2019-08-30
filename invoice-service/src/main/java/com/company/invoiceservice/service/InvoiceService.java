@@ -2,7 +2,6 @@ package com.company.invoiceservice.service;
 
 import com.company.invoiceservice.dao.InvoiceDao;
 import com.company.invoiceservice.dao.InvoiceItemDao;
-import com.company.invoiceservice.model.Customer;
 import com.company.invoiceservice.model.Invoice;
 import com.company.invoiceservice.model.InvoiceItem;
 import com.company.invoiceservice.viewmodel.InvoiceViewModel;
@@ -88,32 +87,7 @@ public class InvoiceService {
         return invoiceViewModel;
     }
 
-//    @Transactional
-//    public InvoiceViewModel saveInvoice(InvoiceViewModel invoiceViewModel) {
-//
-//        Invoice invoice = new Invoice();
-//        invoice.setCustomerId(invoiceViewModel.getCustomerId());
-//        invoice.setPurchaseDate(invoiceViewModel.getPurchaseDate());
-//
-//        System.out.println("!!!!!!!!!!!!!");
-//        System.out.println(invoice.toString());
-//
-//        invoice = invoiceDao.addInvoice(invoice);
-//        invoiceViewModel.setInvoiceId(invoice.getInvoiceId());
-//        List<InvoiceItem> invoiceItems = invoiceViewModel.getInvoiceItems();
-//        if(invoiceViewModel.getInvoiceItems() != null) {
-//            invoiceItems.stream().forEach(invoiceItem -> {
-//                invoiceItem.setInvoiceId(invoiceViewModel.getInvoiceId());
-//                invoiceItemDao.addInvoiceItem(invoiceItem);
-//            });
-//        }
-//
-//
-//        invoiceItems = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
-//        invoiceViewModel.setInvoiceItems(invoiceItems);
-//
-//        return invoiceViewModel;
-//    }
+
 
     public InvoiceViewModel findInvoice(int id) {
         Invoice invoice = invoiceDao.getInvoiceById(id);
@@ -151,24 +125,6 @@ public class InvoiceService {
         });
     }
 
-//    public void updateInvoice(InvoiceViewModel invoiceViewModel) {
-//        Invoice invoice = new Invoice();
-//        invoice.setInvoiceId(invoiceViewModel.getInvoiceId());
-//        invoice.setCustomerId(invoiceViewModel.getCustomerId());
-//        invoice.setPurchaseDate(invoiceViewModel.getPurchaseDate());
-//        invoiceDao.updateInvoice(invoice);
-//
-//        List<InvoiceItem> invoiceItems = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
-//        invoiceItems.stream().forEach(invoiceItem -> {
-//            invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
-//        });
-//
-//        invoiceItems = invoiceViewModel.getInvoiceItems();
-//        invoiceItems.stream().forEach(invoiceItem -> {
-//            invoiceItem.setInvoiceId(invoiceViewModel.getInvoiceId());
-//            invoiceItemDao.addInvoiceItem(invoiceItem);
-//        });
-//    }
 
     public List<InvoiceViewModel> getAllInvoices() {
         List<Invoice> invoices = invoiceDao.getAllInvoices();
@@ -189,13 +145,5 @@ public class InvoiceService {
         return invoiceViewModel;
     }
 
-//    private InvoiceViewModel buildInvoiceViewModel(Invoice invoice) {
-//        InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
-//        invoiceViewModel.setInvoiceId(invoice.getInvoiceId());
-//        invoiceViewModel.setPurchaseDate(invoice.getPurchaseDate());
-//        invoiceViewModel.setCustomerId(invoice.getCustomerId());
-//        List<InvoiceItem> invoiceItems = invoiceItemDao.getInvoiceItemsByInvoiceId(invoice.getInvoiceId());
-//        invoiceViewModel.setInvoiceItems(invoiceItems);
-//        return invoiceViewModel;
-//    }
+
 }
