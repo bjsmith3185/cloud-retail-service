@@ -72,4 +72,16 @@ public class LevelUp {
     public int hashCode() {
         return Objects.hash(id, customerId, points, memberDate);
     }
+
+    // to string
+
+    @Override
+    public String toString() {
+        return "LevelUp{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", points=" + points +
+                ", memberDate=" + memberDate +
+                '}';
+    }
 }

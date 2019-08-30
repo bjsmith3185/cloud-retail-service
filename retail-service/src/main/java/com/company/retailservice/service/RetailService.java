@@ -20,7 +20,7 @@ public class RetailService {
 
     // Dependencies
     @Autowired
-    private LevelUpProducer levelUpQue;
+    private LevelUpProducer que;
 
     @Autowired
     private ProductServiceClient productServiceClient;
@@ -33,32 +33,16 @@ public class RetailService {
     @Autowired
     private InvoiceServiceClient invoiceServiceClient;
 
-    public RetailService(LevelUpServiceClient client) {
+    public RetailService(LevelUpProducer que, ProductServiceClient productServiceClient, CustomerServiceClient customerServiceClient, InventoryServiceClient inventoryServiceClient,
+                         LevelUpServiceClient client, InvoiceServiceClient invoiceServiceClient) {
         this.levelUpServiceClient = client;
+        this.que = que;
+        this.productServiceClient = productServiceClient;
+        this.customerServiceClient = customerServiceClient;
+        this.inventoryServiceClient = inventoryServiceClient;
+        this.invoiceServiceClient = invoiceServiceClient;
+
     }
-
-
-//<<<<<<< HEAD
-//
-//
-//=======
-//>>>>>>> d0ddf905b979cf586ba5853a3ecbb6539a9bffb7
-////    @HystrixCommand(fallbackMethod = "getLevelUpPoints")
-////    public List<LevelUp> levelUpPoints(int id) {
-////
-////        return levelUpServiceClient.getLevelUpByCustomer(id);
-////    }
-//<<<<<<< HEAD
-//=======
-//=======
-//
-////     @HystrixCommand(fallbackMethod = "getLevelUpPoints")
-////     public List<LevelUp> levelUpPoints(int id) {
-////
-////         return levelUpServiceClient.getLevelUpByCustomer(id);
-////     }
-//>>>>>>> d0ddf905b979cf586ba5853a3ecbb6539a9bffb7
-
 
 
     // Service Layer public methods:
@@ -73,51 +57,6 @@ public class RetailService {
 
         return productServiceClient.getAllProducts();
     }
-
-//    public OrderViewModel makeOrder(OrderViewModel model) throws Exception {
-//        OrderViewModel orderViewModel = new OrderViewModel();
-////        orderViewModel.setInvoiceId(model.getInvoiceId());
-////        orderViewModel.setProductId(model.getProductId());
-////        orderViewModel.setProducts(model.getProducts());
-////
-//        Customer customer = checkCustomer(model.getCustomer());
-//        customerServiceClient.createCustomer(customer);
-//
-//        InvoiceViewModel invoice = invoiceServiceClient.getInvoiceById(model.getInvoiceId());
-//        List<ProductOrder> products = model.getProducts();
-//        Inventory inventory = inventoryServiceClient.getInventoryByProductId(model.getProductId());
-////        if (inventoryServiceClient.getQuantity(model.getProduct().getId()) > 0 )
-//        BigDecimal total = invoiceServiceClient.getTotal(model.getInvoiceId());
-//        Integer totalQuantity = invoiceServiceClient.getQuantity(model.getInvoiceId());
-//        BigDecimal newTotal = total.multiply(new BigDecimal(totalQuantity));
-//
-//
-//        List<LevelUp> levelUps = levelUpServiceClient.getLevelUpByCustomer(model.getCustomer().getId());
-//        Product product = productServiceClient.getProductById(model.getProductId());
-//        List<InvoiceViewModel> item = invoiceServiceClient.getItemByInvoice(model.getProductId());
-//        item.stream()
-//                .forEach(n -> {
-//                    n.setInvoice(invoiceServiceClient.getInvoiceById(model.getInvoiceId()));
-//                    invoiceServiceClient.createInvoice(n);
-//                );
-//
-//                        });
-////        product.getListPrice() *
-//        orderViewModel.setInvoiceId(invoice.getInvoice().getInvoiceId());
-////        model.setCustomer(customer);
-//        orderViewModel.setProducts(model.getProducts());
-////        model.setProducts(products);
-//        orderViewModel.setCustomer(model.getCustomer());
-//        orderViewModel.setTotal(newTotal);
-//        orderViewModel.se
-//        //setting total points by calling sum method to add all total points in database
-//        model.setTotalPoints(levelUpServiceClient.getTotalPoints(model.getCustomer().getId()));
-//        if (model.getQuantity() > 0 && model.getQuantity() <= inventoryServiceClient.getQuantity(model.getProduct().getId()))
-//            return model;
-//        else
-//            throw new Exception("Quantity must be greater than zero or your product isn't in stock ");
-//
-//    }
 
 
     public OrderResponseView createOrder(OrderRequestView orderRequestView) {
@@ -156,17 +95,14 @@ public class RetailService {
         System.out.println();
 
 
-
         // create a ProductInvoice object for each item ( new )
         // add the product object
-        List<ProductInvoice> productInvoices = addProductInfo(inStockProducts,customer.getId());
+        List<ProductInvoice> productInvoices = addProductInfo(inStockProducts, customer.getId());
 
         System.out.println();
         System.out.println("!!!!!!!!!!!!!!!!  ADDING PRODUCT OBJECT TO THE LIST ");
         System.out.println(productInvoices.toString());
         System.out.println();
-
-
 
 
         // create and add Invoice and Invoice Item to each ProductInvoice object
@@ -180,9 +116,6 @@ public class RetailService {
         System.out.println();
 
 
-
-
-
         // need to calculate the total price for each product
         productInvoices = totalPriceForEachProduct(productInvoices);
         System.out.println();
@@ -192,9 +125,6 @@ public class RetailService {
         System.out.println();
 
 
-
-
-
         // Now create a singleInvoice object to begin populating
         SingleInvoice singleInvoice = createSingleInvoice(productInvoices);
         System.out.println();
@@ -202,7 +132,6 @@ public class RetailService {
         System.out.println("!!!!!!!!!!!!!!!! CREATING SINGLEINVOICE OBJECT   ");
         System.out.println(singleInvoice.toString());
         System.out.println();
-
 
 
         // trying to use the circuit breaker methods here
@@ -215,7 +144,7 @@ public class RetailService {
         System.out.println(tempLevelUpList.toString());
 
         // create LevelUpInfo object
-        LevelUpInfo levelUpInfo = createLevelUp(customer.getId(), singleInvoice.getOrderTotalPrice(), tempLevelUpList );
+        LevelUpInfo levelUpInfo = createLevelUp(customer.getId(), singleInvoice.getOrderTotalPrice(), tempLevelUpList);
         System.out.println();
         System.out.println();
         System.out.println("!!!!!!!!!!!!!!!! CREATING LEVELUPINFO OBJECT  ");
@@ -224,17 +153,13 @@ public class RetailService {
         System.out.println();
 
 
-
-   //      create OrderResponseView object
-        return createResponseView(singleInvoice, customer, levelUpInfo );
+        //      create OrderResponseView object
+        return createResponseView(singleInvoice, customer, levelUpInfo);
 //       return null;
     }
 
 
     // Helper Methods
-
-
-
 
 
     public OrderResponseView createResponseView(SingleInvoice singleInvoice, Customer customer, LevelUpInfo levelUpInfo) {
@@ -248,14 +173,10 @@ public class RetailService {
     }
 
 
-
-
-
     public List<LevelUp> levelUpPoints(int id) {
 
         return levelUpServiceClient.getLevelUpByCustomer(id);
     }
-
 
 
     public LevelUpInfo createLevelUp(int customerId, BigDecimal totalPrice, List<LevelUp> leveluplist) {
@@ -264,7 +185,7 @@ public class RetailService {
         // loop the list and add up the existing points
         int pointHistoryTotal = 0;
 
-        for ( LevelUp each: leveluplist ) {
+        for (LevelUp each : leveluplist) {
             pointHistoryTotal += each.getPoints();
         }
 
@@ -290,13 +211,11 @@ public class RetailService {
 
 
         System.out.println();
-        System.out.println(   "see shat is here for level up    "     );
+        System.out.println("see shat is here for level up    ");
         System.out.println();
         System.out.println(levelUpInfo.toString());
 
 
-
-
         // send the points for this order to Levelup-Service
         // this will use the levelup-que
         LevelUp currentLevelUp = new LevelUp();
@@ -304,41 +223,14 @@ public class RetailService {
         currentLevelUp.setCustomerId(customerId);
         currentLevelUp.setMemberDate(LocalDate.now());
 
-        levelUpQue.createLevelUp(currentLevelUp);
+
+        que.toLevelUpQueue(currentLevelUp);
+
 
 //        levelUpServiceClient.createLevelUp(currentLevelUp);
 
         return levelUpInfo;
     }
-
-
-    public LevelUpInfo getLevelUpPoints(int customerId, BigDecimal totalPrice) {
-
-        // Calculate the current level up points from the current order
-        int factor = BigDecimal.valueOf(totalPrice.longValue())
-                .divide(BigDecimal.valueOf(50)).intValue();
-        // use this int to calculate the total points
-        int newPoints = factor * 10;
-
-        // send the points for this order to Levelup-Service
-        // this will use the levelup-que
-        LevelUp currentLevelUp = new LevelUp();
-        currentLevelUp.setPoints(newPoints);
-        currentLevelUp.setCustomerId(customerId);
-        currentLevelUp.setMemberDate(LocalDate.now());
-
-//        levelUpServiceClient.createLevelUp(currentLevelUp);
-
-        // Create a LevelUpInfo object that will be returned
-        LevelUpInfo levelUpInfo = new LevelUpInfo();
-        // add the current points to the return object
-        levelUpInfo.setCurrentOrderPoints(newPoints);
-        levelUpInfo.setTotalPoints(newPoints);
-
-        return levelUpInfo;
-    }
-
-
 
 
     public SingleInvoice createSingleInvoice(List<ProductInvoice> productInvoices) {
@@ -351,7 +243,7 @@ public class RetailService {
         List<OrderProducts> productList = new ArrayList<>();
 
 
-        for ( ProductInvoice each: productInvoices ) {
+        for (ProductInvoice each : productInvoices) {
             OrderProducts orderProducts = new OrderProducts();
             orderProducts.setInvoiceItemId(each.getInvoiceItem().getId());
             orderProducts.setQuantity(each.getQuantity());
@@ -378,7 +270,7 @@ public class RetailService {
     public BigDecimal orderTotalPrice(List<OrderProducts> productList) {
         BigDecimal orderTotal = new BigDecimal(0.00).setScale(2);
 
-        for ( OrderProducts each: productList ) {
+        for (OrderProducts each : productList) {
             orderTotal = orderTotal.add(each.getTotalPrice());
         }
 
@@ -391,9 +283,9 @@ public class RetailService {
 //        BigDecimal orderTotal = new BigDecimal(0.00).setScale(2);
 
         // need to find where the quantity and list price are in the object
-        for ( ProductInvoice each: productInvoices ) {
+        for (ProductInvoice each : productInvoices) {
             BigDecimal productTotal = new BigDecimal(0.00).setScale(2);
-            BigDecimal tempQuantity = new BigDecimal(each.getQuantity() );
+            BigDecimal tempQuantity = new BigDecimal(each.getQuantity());
             BigDecimal productPrice = each.getProduct().getListPrice();
 
             productTotal = tempQuantity.multiply(productPrice);
@@ -403,7 +295,6 @@ public class RetailService {
 
         return productInvoices;
     }
-
 
 
     public List<ProductInvoice> addProductInfo(List<InStockProducts> inStockProduct, int customerId) {
@@ -456,11 +347,11 @@ public class RetailService {
 
         // add the data from the invoice to the productInvoice object
 
-        for ( ProductInvoice eachProductInvoice : inStockProduct ) {
+        for (ProductInvoice eachProductInvoice : inStockProduct) {
 
-            for ( InvoiceItem eachInvoiceItem : fromService.getInvoiceItems() ) {
+            for (InvoiceItem eachInvoiceItem : fromService.getInvoiceItems()) {
 
-                if( eachProductInvoice.getInventory().getId() == eachInvoiceItem.getInventoryId() ) {
+                if (eachProductInvoice.getInventory().getId() == eachInvoiceItem.getInventoryId()) {
 
                     System.out.println();
                     System.out.println();
@@ -487,7 +378,6 @@ public class RetailService {
         System.out.println();
         System.out.println("!!!!!!!!!!!!!!  THIS IS THE ITEM LIST TO CHECK INVENTORY ON");
         System.out.println(itemList.toString());
-
 
 
         List<InStockProducts> inStockProducts = new ArrayList<>();
@@ -543,8 +433,6 @@ public class RetailService {
     }
 
 
-
-
     public Customer checkCustomer(Customer customer) {
 
         if (customer.getId() <= 0) {
@@ -555,308 +443,6 @@ public class RetailService {
 
         return customer;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public OrderResponseView createOrder(OrderRequestView orderRequestView) {
-//
-//        // ******* may need to add the product listPrice in the request view  *********
-//
-//        // check if the products are in stock
-//        InvoiceViewModel tempInvoiceViewModel = checkIfInStock(orderRequestView.getProducts());
-//
-//        if ( tempInvoiceViewModel.getInvoiceItems().size() == 0 ) {
-//            // all products ordered are out of stock
-//            // maybe throw execption "out of stock"
-//            return null;
-//        }
-//
-//        // Create an OrderResponseView to return
-//        OrderResponseView returnView = new OrderResponseView();
-//        // Create a SingleInvoice to populate and add to the returnView object
-//        SingleInvoice singleInvoice = new SingleInvoice();
-//
-//
-//        // Check if the customer exists or needs to be created
-//            // add customer object to the return view
-//        returnView.setCustomer(checkCustomer(orderRequestView.getCustomer()));
-//
-//        // populate the tempInvoiceViewModel with customer info
-//            // create a temp Inoice object to help
-//            Invoice tempInvoice = new Invoice();
-//            tempInvoice.setCustomerId(returnView.getCustomer().getId());
-//            tempInvoice.setPurchaseDate(LocalDate.now());
-//
-//        tempInvoiceViewModel.setInvoice(tempInvoice);
-//
-//
-//        // create invoice with invoiceItems by passing in the tempInvoiceViewModel
-//            // use the previously defined tempInvoiceViewModel to capture the return
-//
-//        tempInvoiceViewModel = createInvoice(tempInvoiceViewModel);
-//
-//     // what does tempInvoiceViewModel look like?
-//
-//        // need a dto that included product details
-//
-//        // what is in singleinvoice lsit?  List of TempInvoice items which includes product
-//
-//
-//        singleInvoice.setOrderItems(addProductInfo(tempInvoiceViewModel)); // call the add products() here
-//
-//
-//
-//        // calculate the total price
-//            // add total price to singleInvoice object
-//        singleInvoice.setOrderTotalPrice(totalOrderPrice(singleInvoice.getOrderItems()));
-////        singleInvoice.setOrderTotalPrice(totalOrderPrice(tempInvoiceViewModel));
-//
-//        // add level up points to the singleInvoice object
-//        singleInvoice.setLevelUpPoints(includeLevelUp(tempInvoice.getCustomerId(), singleInvoice.getOrderTotalPrice()));
-//
-//        // populate the response object with singleInvoice
-//        returnView.setOrder(singleInvoice);
-//
-//
-//
-//        return returnView;
-//
-//    }
-//
-//
-//
-//
-//
-//    // Helper Methods
-//
-//    public InvoiceViewModel checkIfInStock(List<InputItem> itemList) {
-//        // loop the list of products to see if they are in stock
-//        // if they are available put them in a temp list
-//
-//        List<InvoiceItem> tempInvoiceViewList = new ArrayList<>();
-//
-//        for ( InputItem each: itemList) {
-//
-//            // get Inventory object for each productId
-//            Inventory tempInventory = inventoryServiceClient.getInventoryByProductId(each.getProductId());
-//            if ( each.getQuantity() <= tempInventory.getQuantity()) {
-//
-//               InvoiceItem tempInvoiceItem = new InvoiceItem();
-//               tempInvoiceItem.setInventoryId(tempInventory.getInventoryId());
-//               tempInvoiceItem.setQuantity(each.getQuantity());
-//               // need to add price here
-//
-//               tempInvoiceViewList.add(tempInvoiceItem);
-//
-//            }
-//
-//        }
-//        // now we have a list of products that are in stock.
-//
-//        // create a InvoiceViewModel object
-//        InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
-//        invoiceViewModel.setInvoiceItems(tempInvoiceViewList);
-//
-//
-//        return  invoiceViewModel;
-//    }
-//
-//
-//    public void updateQuantity(int inventoryId, Inventory inventory) {
-//
-//
-//    }
-//
-//
-//
-//    public Customer checkCustomer (Customer customer) {
-//
-//        if (customer.getId() < 0 ) {
-//            // create a new Customer
-//            customer = customerServiceClient.createCustomer(customer);
-//        }
-//
-//        return customer;
-//    }
-//
-//
-//    public InvoiceViewModel createInvoice(InvoiceViewModel invoiceViewModel ) {
-//        // returns a InvoiceViewModel with invoiceId and invoiceItemId's
-//        return invoiceServiceClient.createInvoice(invoiceViewModel);
-//    }
-//
-//
-//    public BigDecimal totalOrderPrice(List<TempInvoiceItem> itemList) {
-//
-//        BigDecimal total = new BigDecimal(0.00).setScale(2);
-//
-//        for ( TempInvoiceItem each: itemList ) {
-//            total = total.add(each.getProductTotalPrice());
-//
-//        }
-//
-//        return  total;
-//    }
-//
-//
-//
-//    public int includeLevelUp(int customerId, BigDecimal totalPrice) {
-//
-//        List<LevelUp> tempLevelUp = levelUpServiceClient.getLevelUpByCustomer(customerId);
-//
-//        // divide the totalPrice by 50
-//
-//        int factor = BigDecimal.valueOf(totalPrice.longValue())
-//                .divide(BigDecimal.valueOf(50)).intValue();
-//
-//
-//        // use this int to calculate the total points
-//        int newPoints = factor * 10;
-//
-//        // add the new points to the existing points
-//        int newLevelUpTotal = tempLevelUp.getPoints() + newPoints;
-//        // update the new total in the tempLevelUp object
-//        tempLevelUp.setPoints(newLevelUpTotal);
-//
-//        // send the updated object to the que
-//
-//
-//        //if level up has ID then its update, no level up id is create
-//
-//
-//
-//
-//        // --------------------------------------
-//        // return the new total
-//        return newLevelUpTotal;
-//    }
-//
-//
-//    public List<TempInvoiceItem> addProductInfo(InvoiceViewModel invoiceViewModel) {
-//        // TempInvoiceItem list to return
-//        List<TempInvoiceItem> returnList = new ArrayList<>();
-//
-//        for ( InvoiceItem each: invoiceViewModel.getInvoiceItems() ) {
-//            TempInvoiceItem tempInvoiceItem = new TempInvoiceItem();
-//
-//            tempInvoiceItem.setInvoiceId(invoiceViewModel.getInvoice().getInvoiceId());
-//            tempInvoiceItem.setInvoiceItemId(each.getInvoiceItemId());
-//
-//            // call the inventory service and pass in the inventoryId to find product Id
-//                // invoiceItemId = each.getInvoiceItemdId()
-//            Inventory inventory = inventoryServiceClient.getInventoryById(each.getInventoryId());
-//
-//            // call the product service with the productId from above
-//            Product product = productServiceClient.getProductById(inventory.getProductId());
-//
-//            // add the Product Object to the tempinvoiceItem
-//            tempInvoiceItem.setProduct(product);
-//
-//            // add quantity ordered
-//            tempInvoiceItem.setQuantity(each.getQuantity());
-//
-//            // calculate the total for this product
-//            BigDecimal tempQuantity = new BigDecimal(each.getQuantity() );
-//            BigDecimal invoiceItemTotal = each.getUnitPrice().multiply(tempQuantity);
-//            tempInvoiceItem.setProductTotalPrice(invoiceItemTotal);
-//
-//
-//            // add tempinvoiceItem to the returnList
-//            returnList.add(tempInvoiceItem);
-//
-//
-//        }
-//
-//        return returnList;
-//    }
-
-    public BigDecimal getTotalPriceByInvoice(int invoiceId) {
-      return invoiceServiceClient.getTotal(invoiceId).multiply(new BigDecimal(invoiceServiceClient.getQuantity(invoiceId)));
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

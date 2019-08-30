@@ -1,5 +1,7 @@
 package com.company.retailservice.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,6 +9,7 @@ public class OrderRequestView {
 
 
     private Customer customer;
+    @NotNull
     private List<InputItem> products;
 
 

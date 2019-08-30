@@ -35,6 +35,8 @@ public class LevelUpController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public LevelUp createLevelUp(@RequestBody LevelUp levelUp) {
+        System.out.println("Post route was just called");
+        System.out.println(levelUp.toString());
         return service.saveLevelUp(levelUp);
     }
 
