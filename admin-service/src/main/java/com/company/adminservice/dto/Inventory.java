@@ -1,15 +1,12 @@
 package com.company.adminservice.dto;
 
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class Inventory {
 
 
     private int id;
-    @NotNull
     private int productId;
-    @NotNull
     private int quantity;
 
     // getters / setters

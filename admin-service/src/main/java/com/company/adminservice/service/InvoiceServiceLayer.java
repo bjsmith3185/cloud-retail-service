@@ -29,7 +29,14 @@ public class InvoiceServiceLayer {
 
     // FINDALL INVOICE
     public List<InvoiceViewModel> findAllInvoices() {
-         return invoiceServiceClient.getAllInvoices();
+//         return invoiceServiceClient.getAllInvoices();
+          List<InvoiceViewModel> fromService = invoiceServiceClient.getAllInvoices();
+          for ( InvoiceViewModel each: fromService ) {
+              System.out.println(each.toString());
+          }
+
+         return fromService;
+
     }
 
     // UPDATE INVOICE

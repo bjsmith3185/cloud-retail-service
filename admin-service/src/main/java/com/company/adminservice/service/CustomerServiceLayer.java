@@ -32,6 +32,7 @@ public class CustomerServiceLayer {
 
     // FINDALL CUSTOMER
     public List<Customer> findAllCustomers() {
+        System.out.println("in the customer service layer");
         return customerServiceClient.getAllCustomers();
     }
 

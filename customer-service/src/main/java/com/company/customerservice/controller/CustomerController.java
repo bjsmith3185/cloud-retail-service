@@ -36,6 +36,7 @@ public class CustomerController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Customer> getAllCustomers() {
+        System.out.println("getting all customers");
         return service.getAllCustomers();
     }
 

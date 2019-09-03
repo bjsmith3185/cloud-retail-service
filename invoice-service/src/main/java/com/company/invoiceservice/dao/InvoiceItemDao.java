@@ -18,9 +18,9 @@ public interface InvoiceItemDao {
 
     List<InvoiceItem> getInvoiceItemsByInvoiceId(int id);
 
-    BigDecimal totalPriceItems(int invoiceId);
-
-    int totalQuantityByInvoice(int invoiceId);
+//    BigDecimal totalPriceItems(int invoiceId);
+//
+//    int totalQuantityByInvoice(int invoiceId);
 
 
     }

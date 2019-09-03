@@ -1,6 +1,5 @@
 package com.company.adminservice.dto;
 
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -8,11 +7,8 @@ public class InvoiceItem {
 
 
     private int invoiceItemId;
-    @NotEmpty
     private int invoiceId;
-    @NotEmpty
     private int inventoryId;
-    @NotEmpty
     private int quantity;
 
     private BigDecimal unitPrice;

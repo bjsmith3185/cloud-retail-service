@@ -40,6 +40,9 @@ public class InvoiceController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceViewModel> getAllInvoices() {
+        System.out.println();
+        System.out.println("get all invoices");
+        System.out.println();
         return service.getAllInvoices();
     }
 
@@ -59,57 +62,57 @@ public class InvoiceController {
         service.updateInvoice(invoice);
     }
 
-    @PostMapping("/invoiceitems")
-    public InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
-        InvoiceItem invoiceItem1 = service.saveInvoiceItem(invoiceItem);
-        return invoiceItem1;
-    }
+//    @PostMapping("/invoiceitems")
+//    public InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
+//        InvoiceItem invoiceItem1 = service.saveInvoiceItem(invoiceItem);
+//        return invoiceItem1;
+//    }
+//
+//    @GetMapping(value = "/invoiceitems/id/{id}")
+//    public InvoiceItem getInvoiceItem(@PathVariable int id) {
+//        InvoiceItem invoiceItem = service.findInvoiceItem(id);
+//
+//        if (invoiceItem == null) {
+//            throw new NotFoundException("Invoice Item could not be retrieved for id " + id);
+//        }
+//
+//        return invoiceItem;
+//    }
+//
+//    @GetMapping("/invoiceitems")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<InvoiceItem> getAllInvoiceItems() {
+//        return service.getAllInvoiceItems();
+//    }
+//
+//    @PutMapping(value = "/invoiceitems/id/{id}")
+//    public void updateInvoiceItem(@RequestBody InvoiceItem invoiceItem, @PathVariable int id) {
+//        if (id != invoiceItem.getId()) {
+//            throw new IllegalArgumentException("Invoice Item ID on path must match the ID in the invoice item object");
+//        }
+//        service.updateInvoiceItem(invoiceItem);
+//    }
+//
+//    @GetMapping("/invoiceitems/{invoiceid}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<InvoiceItem> getItemByInvoice(@PathVariable("invoiceid") int invoiceId) {
+//        return service.getItemByInvoice(invoiceId);
+//    }
 
-    @GetMapping(value = "/invoiceitems/id/{id}")
-    public InvoiceItem getInvoiceItem(@PathVariable int id) {
-        InvoiceItem invoiceItem = service.findInvoiceItem(id);
+//    @GetMapping("/invoiceitems/total/{invoiceid}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public BigDecimal getTotal(@PathVariable("{invoiceid}") int invoiceId) {
+//        return service.getTotalByInvoice(invoiceId);
+//    }
 
-        if (invoiceItem == null) {
-            throw new NotFoundException("Invoice Item could not be retrieved for id " + id);
-        }
+//    @GetMapping("/invoiceitems/quantity/{invoiceid}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public int getQuantity(@PathVariable("{invoiceid}") int invoiceId) {
+//        return service.getTotalQuantity(invoiceId);
+//    }
 
-        return invoiceItem;
-    }
-
-    @GetMapping("/invoiceitems")
-    @ResponseStatus(HttpStatus.OK)
-    public List<InvoiceItem> getAllInvoiceItems() {
-        return service.getAllInvoiceItems();
-    }
-
-    @PutMapping(value = "/invoiceitems/id/{id}")
-    public void updateInvoiceItem(@RequestBody InvoiceItem invoiceItem, @PathVariable int id) {
-        if (id != invoiceItem.getId()) {
-            throw new IllegalArgumentException("Invoice Item ID on path must match the ID in the invoice item object");
-        }
-        service.updateInvoiceItem(invoiceItem);
-    }
-
-    @GetMapping("/invoiceitems/{invoiceid}")
-    @ResponseStatus(HttpStatus.OK)
-    public List<InvoiceItem> getItemByInvoice(@PathVariable("invoiceid") int invoiceId) {
-        return service.getItemByInvoice(invoiceId);
-    }
-
-    @GetMapping("/invoiceitems/total/{invoiceid}")
-    @ResponseStatus(HttpStatus.OK)
-    public BigDecimal getTotal(@PathVariable("{invoiceid}") int invoiceId) {
-        return service.getTotalByInvoice(invoiceId);
-    }
-
-    @GetMapping("/invoiceitems/quantity/{invoiceid}")
-    @ResponseStatus(HttpStatus.OK)
-    public int getQuantity(@PathVariable("{invoiceid}") int invoiceId) {
-        return service.getTotalQuantity(invoiceId);
-    }
-
-    @DeleteMapping(value = "/invoiceitems/{id}")
-    public void deleteInvoiceItem(@PathVariable(name = "id") int id) {
-        service.removeInvoiceItem(id);
-    }
+//    @DeleteMapping(value = "/invoiceitems/{id}")
+//    public void deleteInvoiceItem(@PathVariable(name = "id") int id) {
+//        service.removeInvoiceItem(id);
+//    }
 }

@@ -1,23 +1,15 @@
 package com.company.adminservice.dto;
 
-import javax.validation.constraints.*;
 import java.util.Objects;
 
 public class Customer {
     private int id;
-    @NotEmpty
     private String firstName;
-    @NotEmpty
     private String lastName;
-    @NotEmpty
     private String street;
-    @NotEmpty
     private String city;
-    @Size(min = 5, max = 5)
     private String zip;
-    @NotEmpty
     private String email;
-    @NotNull
     private String phone;
 
     public int getId() {

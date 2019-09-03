@@ -1,20 +1,17 @@
 package com.company.adminservice.dto;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Invoice {
 
-
     private int invoiceId;
-    @NotEmpty
+    @Min(1)
     private int customerId;
-    @NotEmpty
+    @NotNull
     private LocalDate purchaseDate;
-
-
-    // getters / setters
 
     public int getInvoiceId() {
         return invoiceId;
@@ -39,7 +36,6 @@ public class Invoice {
     public void setPurchaseDate(LocalDate purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
-// equals / hash
 
     @Override
     public boolean equals(Object o) {
@@ -56,9 +52,7 @@ public class Invoice {
         return Objects.hash(invoiceId, customerId, purchaseDate);
     }
 
-
     // to string
-
 
     @Override
     public String toString() {
