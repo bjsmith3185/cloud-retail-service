@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +24,10 @@ public class InvoiceService {
         this.invoiceItemDao = invoiceItemDao;
     }
 
-//    public int getTotalQuantity(int invoiceId) {
-//        return invoiceItemDao.totalQuantityByInvoice(invoiceId);
-//    }
-
     public List<InvoiceItem> getItemByInvoice(int invoiceId) {
         return invoiceItemDao.getInvoiceItemsByInvoiceId(invoiceId);
     }
 
-//    public BigDecimal getTotalByInvoice(int invoiceId) {
-//        return invoiceItemDao.totalPriceItems(invoiceId);
-//    }
 
     @Transactional
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem) {
@@ -66,9 +58,6 @@ public class InvoiceService {
         Invoice invoice = new Invoice();
         invoice.setCustomerId(invoiceViewModel.getInvoice().getCustomerId());
         invoice.setPurchaseDate(invoiceViewModel.getInvoice().getPurchaseDate());
-
-        System.out.println("!!!!!!!!!!!!!");
-        System.out.println(invoice.toString());
 
         invoice = invoiceDao.addInvoice(invoice);
         invoiceViewModel.setInvoice(invoice);
@@ -128,22 +117,11 @@ public class InvoiceService {
 
     public List<InvoiceViewModel> getAllInvoices() {
 
-        System.out.println();
-        System.out.println("get all invoices service layer");
-        System.out.println();
-
         List<Invoice> invoices = invoiceDao.getAllInvoices();
-
 
         List<InvoiceViewModel> invoiceViewModels = new ArrayList<>();
         for (Invoice invoice: invoices) {
             invoiceViewModels.add(buildInvoiceViewModel(invoice));
-        }
-
-        System.out.println();
-        System.out.println();
-        for ( InvoiceViewModel each: invoiceViewModels ) {
-            System.out.println(each.toString());
         }
 
         return invoiceViewModels;

@@ -1,7 +1,6 @@
 package com.company.invoiceservice.controller;
 
 import com.company.invoiceservice.exception.NotFoundException;
-import com.company.invoiceservice.model.InvoiceItem;
 import com.company.invoiceservice.service.InvoiceService;
 import com.company.invoiceservice.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -21,10 +19,6 @@ public class InvoiceController {
 
     @PostMapping
     public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel) {
-
-        System.out.println("!!!!!!!");
-        System.out.println(invoiceViewModel.getInvoice().toString());
-        System.out.println(invoiceViewModel.getInvoiceItems().toString());
 
         return service.saveInvoice(invoiceViewModel);
     }
@@ -40,10 +34,7 @@ public class InvoiceController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceViewModel> getAllInvoices() {
-        System.out.println();
-        System.out.println("get all invoices");
-        System.out.println();
-        return service.getAllInvoices();
+         return service.getAllInvoices();
     }
 
     @DeleteMapping("/id/{id}")
@@ -54,7 +45,7 @@ public class InvoiceController {
 
     @PutMapping(value = "/id/{id}")
     public void updateInvoice(@RequestBody InvoiceViewModel invoice, @PathVariable int id) {
-//        if (id != invoice.getInvoiceId()) {
+
         if (id != invoice.getInvoice().getInvoiceId()) {
             throw new IllegalArgumentException("Invoice ID on path must match the ID in the invoice object");
         }
